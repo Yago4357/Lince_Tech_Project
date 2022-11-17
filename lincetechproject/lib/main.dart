@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
-import 'Screens/homepage.dart';
+import 'package:provider/provider.dart';
+import 'Classes/vagas.dart';
+import 'Screens/initialpage.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    /// Providers are above [MyApp] instead of inside it, so that tests
+    /// can use [MyApp] while mocking the providers
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => Vagas()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 ///Main of myApp
@@ -18,7 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: InitialPage(),
     );
   }
 }
