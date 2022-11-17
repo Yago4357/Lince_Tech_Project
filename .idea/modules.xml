@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/lincetechproject/lincetechproject.iml" filepath="$PROJECT_DIR$/lincetechproject/lincetechproject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lincetechproject/android/lincetechproject_android.iml" filepath="$PROJECT_DIR$/lincetechproject/android/lincetechproject_android.iml" />
+    </modules>
+  </component>
+</project>
