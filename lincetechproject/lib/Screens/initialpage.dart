@@ -5,6 +5,18 @@ import '../Classes/vagas.dart';
 ///Initial Page of myApp
 class InitialPage extends StatelessWidget {
 
+  @override
+  StatelessElement createElement() {
+
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => Vagas()),
+      ],
+      child: const InitialPage(),
+    );
+    return super.createElement();
+  }
+
   ///Initial Page constructor of myApp
   const InitialPage({Key? key}) : super(key: key);
 
