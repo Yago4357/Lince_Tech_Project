@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../Model/drawer.dart';
+
 ///Initial Screen Class
 class MyHomePage extends StatelessWidget {
   ///Title show in my Initial Screen
-  final String title;
 
   ///Initial Screen Construct
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const DrawerWidget(),
       body: Container(
         color: Colors.black,
         child: Column(
@@ -43,7 +45,9 @@ class MyHomePage extends StatelessWidget {
                       child: Material(
                         color: const Color.fromRGBO(217, 217, 217, 0.4),
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () async {
+                            await Navigator.pushNamed(context, '/InitialPage');
+                          },
                           child: const Text('N de Vagas'),
                         ),
                       ),
