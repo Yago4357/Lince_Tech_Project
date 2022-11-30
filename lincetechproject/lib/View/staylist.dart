@@ -14,14 +14,37 @@ class StayList extends StatelessWidget {
       child: Consumer<CarProvider>(builder: (_, Car, __) {
         return Scaffold(
           drawer: const DrawerWidget(),
-          body:
-          ListView(
-            scrollDirection: Axis.vertical,
+          body: Column(
             children: [
-            TextButton(onPressed: Car.teste,
-            child: Text(Car.stayList.toString()),),
-          ],
-        ),);
+              Expanded(
+                child: ListView(
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    Text(Car.stayList.toString()),
+                  ],
+                ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () async {
+                        await Navigator.pushNamed(context, '/CarPage');
+                      },
+                      child: Text('Add um'),
+                    ),
+                  ),
+                  Expanded(
+                    child: TextButton(
+                      onPressed: Car.teste,
+                      child: Text('Vamos Dales'),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
       }),
     );
   }

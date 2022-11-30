@@ -13,7 +13,7 @@ class CarPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => CarProvider(),
-      child: Consumer<CarProvider>(builder: (_, price, __) {
+      child: Consumer<CarProvider>(builder: (_, Car, __) {
         return Scaffold(
           drawer: const DrawerWidget(),
           body: Column(
@@ -22,7 +22,9 @@ class CarPage extends StatelessWidget {
                 child: TextPrice(),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Car.teste();
+                },
                 child: const Icon(Icons.add_box),
               ),
             ],
@@ -50,9 +52,6 @@ class TextPrice extends StatelessWidget {
           ),
           TextFormField(
             controller: state.controllerDriver,
-          ),
-          TextFormField(
-            controller: state.controllerPrice,
           ),
         ],
       ),

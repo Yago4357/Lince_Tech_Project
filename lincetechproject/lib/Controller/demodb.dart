@@ -9,33 +9,32 @@ class DatabaseHelper {
     init();
   }
 
-  late Database db;
+ late Database db;
 
   void init() async {
     final databasePath = await getDatabasesPath();
     final path = '$databasePath/demo.db';
 
     db = await openDatabase(path, version: _dbVersion,
-        onCreate: (db, version) async {
-      await db.execute('''CREATE TABLE Car('
-          'ID	INTEGER NOT NULL,'
-          'ENTRY_DATE	TEXT,'
-          'EXIT_DATE	TEXT,'
-          'LICENSE_PLATE	TEXT NOT NULL,'
-          'DRIVER_NAME	TEXT NOT NULL,'
-          'TOTAL_PRICE	INTEGER,'
-          'PRIMARY KEY(ID AUTOINCREMENT)''');
+        onCreate: (Database database, int version) async {
+      await database.execute('''CREATE TABLE Car(
+          ID INTEGER NOT NULL,
+          ENTRY_DATE TEXT,
+          EXIT_DATE	TEXT,
+          LICENSE_PLATE	TEXT NOT NULL,
+          DRIVER_NAME	TEXT NOT NULL,
+          TOTAL_PRICE	INTEGER,
+          PRIMARY KEY(ID AUTOINCREMENT));''');
     });
   }
 
   Future<void> insertIn(List<Stay> _list) async {
     for (final stay in _list) {
       await db.insert('Car', {
-        'ENTRY_DATE': stay.entry_date,
+        'ENTRY_DATE': stay.entry_date.toString(),
         'LICENSE_PLATE': stay.license_plate,
         'DRIVER_NAME': stay.driver_name,
       });
-      _list.remove(stay);
     }
   }
 
@@ -44,33 +43,35 @@ class DatabaseHelper {
       await db.update(
         'Car',
         {
-          'EXIT_DATE': stay.exit_date,
+          'EXIT_DATE': stay.exit_date.toString(),
           'TOTAL_PRICE': stay.total_price,
         },
         where: 'LICENSE_PLATE = ?',
         whereArgs: [stay.license_plate],
       );
-      _list.remove(stay);
     }
   }
 
-  Future<Stay?> getOne(String search) async {
+  Future<List<Stay>> getAllFinished() async {
     final rows = await db.query(
       'Car',
       columns: [
         'ID',
         'ENTRY_DATE',
-        'EXIT_DATE',
         'LICENSE_PLATE',
         'DRIVER_NAME',
-        'TOTAL_PRICE'
       ],
-      where: 'LICENSE_PLATE = ?',
-      whereArgs: [search],
     );
+
+    final list = <Stay>[];
+    for (final row in rows) {
+      list.add(Stay.fromDatabaseRowIn(row));
+    }
+
+    return list;
   }
 
-  Future<List<Stay>> getAll() async {
+  Future<List<Stay>> getAllNotFinished() async {
     final rows = await db.query(
       'Car',
       columns: [
@@ -85,7 +86,7 @@ class DatabaseHelper {
 
     final list = <Stay>[];
     for (final row in rows) {
-      list.add(Stay.fromDatabaseRow(row));
+      list.add(Stay.fromDatabaseRowOut(row));
     }
 
     return list;

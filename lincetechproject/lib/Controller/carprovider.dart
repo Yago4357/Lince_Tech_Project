@@ -4,37 +4,51 @@ import '../Model/stay.dart';
 import 'demodb.dart';
 
 ///Price provider
-class CarProvider extends ChangeNotifier{
-
-  CarProvider();
+class CarProvider extends ChangeNotifier {
+  CarProvider() {
+    helper;
+    init();
+  }
 
   final helper = DatabaseHelper();
 
-  List<Stay> _stayList = [];
-
   final _controllerPlate = TextEditingController();
   final _controllerDriver = TextEditingController();
-  final _controllerPrice = TextEditingController();
 
-  get controllerPlate => _controllerPlate;
-  get controllerDriver => _controllerDriver;
-  get controllerPrice => _controllerPrice;
+  TextEditingController get controllerPlate => _controllerPlate;
+  TextEditingController get controllerDriver => _controllerDriver;
 
-  List<Stay> get stayList => _stayList;
 
-  void teste() async{
 
+  List<Stay> _stayList = [];
+
+  List<Stay> get stayList => _stayList ;
+
+  void init() async {
+
+   _stayList = await helper.getAllNotFinished();
+
+  }
+
+  void teste() async {
     helper.init;
 
-    await helper.insertIn([Stay(DateTime.now(), '1234DEU', 'Jorge amado')]);
+    String? Plate = controllerPlate.text;
+    String? Driver = controllerDriver.text;
 
-    final stayListBd = await helper.getAll();
-    print(stayListBd);
-    for(final stay in stayListBd){
-      print('uau');
+    await helper.insertIn([
+      Stay(
+        DateTime.now(),
+        Plate,
+        Driver,
+      )
+    ]);
+
+    final stayListBd = await helper.getAllFinished();
+    for (final stay in stayListBd) {
       _stayList.add(stay);
     }
 
     notifyListeners();
-}
+  }
 }
