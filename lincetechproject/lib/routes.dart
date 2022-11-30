@@ -1,8 +1,13 @@
 import 'package:flutter/cupertino.dart';
+import 'View/carpage.dart';
 import 'View/homepage.dart';
-import 'View/initialpage.dart';
+import 'View/staylist.dart';
+import 'View/vacanciespage.dart';
 
+///Map to define the named Routes
 Map<String, Widget Function(BuildContext)> namedRoutes = {
-  '/InitialPage': (context) => InitialPage(),
-  '/HomePage': (context) => const MyHomePage(),
+  '/': (context) => const HomePage(),
+  '/InitialPage': (context) => const VacanciesPage(),
+  '/CarPage': (context) => const CarPage(),
+  '/StayList': (context) => const StayList(),
 };

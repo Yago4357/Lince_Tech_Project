@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'View/homepage.dart';
 import 'routes.dart';
 
 void main() {
@@ -9,7 +8,7 @@ void main() {
 ///Main of myApp
 class MyApp extends StatelessWidget {
 
-  ///Constrctor of myApp
+  ///Constructor of myApp
   const MyApp({Key? key}) : super(key: key);
 
   @override
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: namedRoutes,
-      home: const MyHomePage(),
+      initialRoute: '/',
     );
   }
 }

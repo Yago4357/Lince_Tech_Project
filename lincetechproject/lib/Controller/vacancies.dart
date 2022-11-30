@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Vagas with ChangeNotifier {
+///Vacancy Model
+class Vacancies extends ChangeNotifier {
 
-  Vagas() {
+  ///Define that the _init run before the screen start
+  Vacancies() {
     unawaited(_init());
   }
 
@@ -14,13 +15,16 @@ class Vagas with ChangeNotifier {
 
   final _controller = TextEditingController();
 
+  ///Function to get vacancies
   int get vacancies => _vacancies;
 
+  ///Function to get Text controller
   TextEditingController get controller => _controller;
 
+  ///Variable to define SharedPreferences key
   String get key => ('vacancy');
 
-  ///Save shared int Vacancy
+  ///Get shared int Vacancy
   Future<void> _init() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -29,16 +33,18 @@ class Vagas with ChangeNotifier {
     notifyListeners();
   }
 
-  ///Get shared int Vacancy
-  Future<void> getShared() async {
+  ///Save shared int Vacancy
+  Future<void> saveShared() async {
 
     final text = controller.text;
-    final vagas = int.tryParse(text) ?? 0;
+
+    ///Int vacancies inside getShared function
+    final vacancies = int.tryParse(text) ?? 0;
 
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(key, vagas);
+    await prefs.setInt(key, vacancies);
 
-    _vacancies = vagas;
+    _vacancies = vacancies;
 
     notifyListeners();
   }

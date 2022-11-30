@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../Model/drawer.dart';
-import '/Controller/vagas.dart';
+
+import '/Controller/vacancies.dart';
+import '../Widgets/drawer.dart';
 
 ///Initial Page of myApp
-class InitialPage extends StatelessWidget {
-  int Nvacancies = 0;
+class VacanciesPage extends StatelessWidget {
+  ///Variable of vacancies
+  final int nvacancies = 0;
 
   ///Initial Page constructor of myApp
-  InitialPage({Key? key}) : super(key: key);
+  const VacanciesPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => Vagas(),
-      child: Consumer<Vagas>(
-        builder: ((_, vaga, __) {
+      create: (_) => Vacancies(),
+      child: Consumer<Vacancies>(
+        builder: (_, vacancies, __) {
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.blue,
@@ -27,36 +29,38 @@ class InitialPage extends StatelessWidget {
                 child: Column(
                   children: [
                     const Padding(
-                        padding: EdgeInsets.all(32.0), child: TextVagas()),
+                      padding: EdgeInsets.all(32.0),
+                      child: TextVacancies(),
+                    ),
                     Text(
-                      vaga.vacancies.toString(),
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline2,
+                      vacancies.vacancies.toString(),
+                      style: Theme.of(context).textTheme.headline2,
                     ),
                   ],
                 ),
               ),
             ),
             floatingActionButton: FloatingActionButton(
-              onPressed: vaga.getShared,
+              onPressed: vacancies.saveShared,
               child: const Icon(
-              Icons.save,
+                Icons.save,
+              ),
             ),
-          ),);
-        }),
+          );
+        },
       ),
     );
   }
 }
 
-class TextVagas extends StatelessWidget {
-  const TextVagas({Key? key}) : super(key: key);
+///Widget to set Controller of TextFormField
+class TextVacancies extends StatelessWidget {
+  ///Widget constructor of TextVacancies
+  const TextVacancies({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final state = Provider.of<Vagas>(context);
+    final state = Provider.of<Vacancies>(context);
 
     return Center(
       child: TextFormField(
