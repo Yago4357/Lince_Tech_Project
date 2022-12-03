@@ -21,7 +21,7 @@ class DatabaseHelper {
           ID INTEGER NOT NULL,
           ENTRY_DATE TEXT,
           EXIT_DATE	TEXT,
-          LICENSE_PLATE	TEXT NOT NULL,
+          LICENSE_PLATE	TEXT NOT NULL UNIQUE,
           DRIVER_NAME	TEXT NOT NULL,
           TOTAL_PRICE	INTEGER,
           PRIMARY KEY(ID AUTOINCREMENT));''');

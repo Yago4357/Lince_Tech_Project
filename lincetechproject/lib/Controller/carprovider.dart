@@ -8,6 +8,7 @@ class CarProvider extends ChangeNotifier {
   CarProvider() {
     helper;
     init();
+    add();
   }
 
   final helper = DatabaseHelper();
@@ -30,7 +31,7 @@ class CarProvider extends ChangeNotifier {
 
   }
 
-  void teste() async {
+  void add() async {
     helper.init;
 
     String? Plate = controllerPlate.text;
@@ -44,11 +45,27 @@ class CarProvider extends ChangeNotifier {
       )
     ]);
 
+    notifyListeners();
+  }
+
+  void getAll() async {
+
+    helper.init;
+
     final stayListBd = await helper.getAllFinished();
     for (final stay in stayListBd) {
       _stayList.add(stay);
     }
 
     notifyListeners();
+
   }
+
+  void delete() async {
+
+    helper.init;
+
+    helper.delete(_stayList);
+  }
+
 }

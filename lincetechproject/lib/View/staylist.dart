@@ -30,13 +30,14 @@ class StayList extends StatelessWidget {
                     child: TextButton(
                       onPressed: () async {
                         await Navigator.pushNamed(context, '/CarPage');
+                        Car.getAll();
                       },
                       child: Text('Add um'),
                     ),
                   ),
                   Expanded(
                     child: TextButton(
-                      onPressed: Car.teste,
+                      onPressed: Car.delete,
                       child: Text('Vamos Dales'),
                     ),
                   ),

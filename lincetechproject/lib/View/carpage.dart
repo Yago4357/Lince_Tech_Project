@@ -15,6 +15,7 @@ class CarPage extends StatelessWidget {
       create: (_) => CarProvider(),
       child: Consumer<CarProvider>(builder: (_, Car, __) {
         return Scaffold(
+          appBar: AppBar(),
           drawer: const DrawerWidget(),
           body: Column(
             children: [
@@ -22,8 +23,10 @@ class CarPage extends StatelessWidget {
                 child: TextPrice(),
               ),
               TextButton(
-                onPressed: () {
-                  Car.teste();
+                onPressed: (){
+                  Car.add();
+                  Car.getAll();
+                  Navigator.popAndPushNamed(context,'/StayList');
                 },
                 child: const Icon(Icons.add_box),
               ),
