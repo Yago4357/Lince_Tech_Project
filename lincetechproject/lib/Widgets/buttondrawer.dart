@@ -33,8 +33,8 @@ class DrawerButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Icon(icon),
-              Text(text),
+              Expanded(child: Icon(icon)),
+              Expanded(child: Text(text)),
             ],
           ),
         ),

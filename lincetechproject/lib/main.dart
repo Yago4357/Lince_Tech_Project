@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'Controller/database.dart';
 import 'routes.dart';
 
 void main() {
   runApp(const MyApp());
+  DatabaseStay().init();
 }
 
 ///Main of myApp

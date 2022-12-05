@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../Controller/carprovider.dart';
 import '../Widgets/drawer.dart';
 
@@ -13,24 +12,55 @@ class CarPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => CarProvider(),
-      child: Consumer<CarProvider>(builder: (_, Car, __) {
+      child: Consumer<CarProvider>(builder: (_, car, __) {
         return Scaffold(
           appBar: AppBar(),
           drawer: const DrawerWidget(),
           body: Column(
-            children: [
-              const Center(
-                child: TextPrice(),
-              ),
-              TextButton(
-                onPressed: (){
-                  Car.add();
-                  Car.getAll();
-                  Navigator.popAndPushNamed(context,'/StayList');
-                },
-                child: const Icon(Icons.add_box),
-              ),
-            ],
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    const Center(
+                      child: TextPrice(),
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(20.00),
+                            child: SizedBox(
+                              width: 150,
+                              height: 50,
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                child: const Text('Tirar Foto'),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(20.00),
+                            child: SizedBox(
+                              width: 150,
+                              height: 50,
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                child: const Text('Escolher da galeria'),
+                              ),
+                            ),
+                          )
+                        ]),
+                  ],
+                ),
+              ],
+            ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () async {
+              car.add();
+              await Navigator.popAndPushNamed(context, '/StayList');
+            },
+            child: const Icon(Icons.add_box),
           ),
         );
       }),
@@ -50,11 +80,19 @@ class TextPrice extends StatelessWidget {
     return SizedBox(
       child: Column(
         children: [
-          TextFormField(
-            controller: state.controllerPlate,
+          Card(
+            margin: const EdgeInsets.only(
+                top: 30.00, right: 20.00, left: 20.00, bottom: 10.00),
+            child: TextFormField(
+              controller: state.controllerPlate,
+            ),
           ),
-          TextFormField(
-            controller: state.controllerDriver,
+          Card(
+            margin: const EdgeInsets.only(
+                top: 10.00, left: 20.00, right: 20.00, bottom: 20.00),
+            child: TextFormField(
+              controller: state.controllerDriver,
+            ),
           ),
         ],
       ),

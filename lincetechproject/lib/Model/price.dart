@@ -12,4 +12,10 @@ class Price {
 
   ///Constructor of price model
   Price(this.parkingLane, this.price, this.initialRange, this.endRange);
+
+  Price.fromDatabaseRowOut(Map<String, Object?> row)
+      : parkingLane = row['PARKING_LANE'] as String,
+        price = row['PRICE'] as double,
+        initialRange = row['INITIAL_RANGE'] as int,
+        endRange = row['END_RANGE'] as int;
 }

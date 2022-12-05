@@ -16,7 +16,7 @@ class DrawerWidget extends StatelessWidget {
           DrawerButton(
               text: 'Price per hour',
               icon: Icons.price_change_outlined,
-              linkPage: '/InitialPage'),
+              linkPage: '/PricePage'),
           DrawerButton(
               text: 'Vacanceis Number',
               icon: Icons.directions_car_filled,
