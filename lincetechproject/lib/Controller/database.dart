@@ -1,10 +1,9 @@
 import 'dart:async';
-
 import 'package:sqflite/sqflite.dart';
 import '../Model/price.dart';
 import '../Model/stay.dart';
 
-const _dbVersion = 2;
+const _dbVersion = 40;
 
 ///Class for Database
 class DatabaseStay {
@@ -30,7 +29,7 @@ class DatabaseStay {
           EXIT_DATE	TEXT,
           LICENSE_PLATE	TEXT NOT NULL UNIQUE,
           DRIVER_NAME	TEXT NOT NULL,
-          TOTAL_PRICE	INTEGER,
+          TOTAL_PRICE	TEXT,
           PRIMARY KEY(ID AUTOINCREMENT));''');
       await database.execute('''CREATE TABLE price( 
           ID INTEGER NOT NULL, 
@@ -68,44 +67,33 @@ class DatabaseStay {
   }
 
   ///Function that insert final datas in database
-  Future<void> insertOut(List<Stay> list) async {
+  Future<void> insertOut(String exit, String plate) async {
 
-    for (final stay in list) {
       await db.update(
         'Car',
         {
-          'EXIT_DATE': stay.exitdate.toString(),
-          'TOTAL_PRICE': stay.totalprice,
+          'EXIT_DATE': exit,
         },
         where: 'LICENSE_PLATE = ?',
-        whereArgs: [stay.licenseplate],
+        whereArgs: [plate],
       );
-    }
+  }
+
+  ///Function that insert final total price in database
+  Future<void> insertTotalPrice(double price, String plate) async {
+
+    await db.update(
+      'Car',
+      {
+        'TOTAL_PRICE': price,
+      },
+      where: 'LICENSE_PLATE = ?',
+      whereArgs: [plate],
+    );
   }
 
   ///Function that get all finished row in database
   Future<List<Stay>> getAllFinished() async {
-
-    final rows = await db.query(
-      'Car',
-      columns: [
-        'ID',
-        'ENTRY_DATE',
-        'LICENSE_PLATE',
-        'DRIVER_NAME',
-      ],
-    );
-
-    final list = <Stay>[];
-    for (final row in rows) {
-      list.add(Stay.fromDatabaseRowIn(row));
-    }
-
-    return list;
-  }
-
-  ///Function that get all not finished rows in database
-  Future<List<Stay>> getAllNotFinished() async {
 
     final rows = await db.query(
       'Car',
@@ -127,6 +115,27 @@ class DatabaseStay {
     return list;
   }
 
+  ///Function that get all not finished rows in database
+  Future<List<Stay>> getAllNotFinished() async {
+
+    final rows = await db.query(
+      'Car',
+      columns: [
+        'ID',
+        'ENTRY_DATE',
+        'LICENSE_PLATE',
+        'DRIVER_NAME'
+      ],
+    );
+
+    final list = <Stay>[];
+    for (final row in rows) {
+      list.add(Stay.fromDatabaseRowIn(row));
+    }
+
+    return list;
+  }
+
   ///Function that delete a row in database
   Future<void> delete(List<Stay> list) async {
 
@@ -140,6 +149,7 @@ class DatabaseStay {
     }
   }
 
+  ///Function to get the prices of database
   Future<List<Price>> getPrices() async {
 
     final rows = await db.query('price', columns: [

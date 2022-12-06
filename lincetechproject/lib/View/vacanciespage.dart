@@ -33,8 +33,8 @@ class VacanciesPage extends StatelessWidget {
                       child: TextVacancies(),
                     ),
                     Text(
-                      vacancies.vacancies.toString(),
-                      style: Theme.of(context).textTheme.headline2,
+                      ' Vagas: ${vacancies.vacancies.toString()}',
+                      style: Theme.of(context).textTheme.headline4,
                     ),
                   ],
                 ),

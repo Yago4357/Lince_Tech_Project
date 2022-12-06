@@ -1,10 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../Controller/priceprovider.dart';
 import '../Widgets/drawer.dart';
 
+///Page for prices
 class PricePage extends StatelessWidget {
+
+  ///Price constructor
   const PricePage({Key? key}) : super(key: key);
 
   @override
@@ -44,7 +46,7 @@ class PricePage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8.0, top: 4.0),
                   child: Table(
-                    children: [
+                    children: const [
                       TableRow(children: [Text('')]),
                     ],
                   ),

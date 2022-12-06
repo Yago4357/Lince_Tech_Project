@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 ///Drawer Buttons widget
 class DrawerButton extends StatelessWidget {
@@ -33,8 +34,10 @@ class DrawerButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Expanded(child: Icon(icon)),
-              Expanded(child: Text(text)),
+              Expanded(child: Icon(icon,color: Colors.white,)),
+              Expanded(child: Text(text, style: GoogleFonts.poppins(
+                color: Colors.white,
+              ),)),
             ],
           ),
         ),

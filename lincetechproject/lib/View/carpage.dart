@@ -29,7 +29,7 @@ class CarPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding: EdgeInsets.all(20.00),
+                            padding: const EdgeInsets.all(20.00),
                             child: SizedBox(
                               width: 150,
                               height: 50,

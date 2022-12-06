@@ -10,6 +10,6 @@ Map<String, Widget Function(BuildContext)> namedRoutes = {
   '/': (context) => const HomePage(),
   '/InitialPage': (context) => const VacanciesPage(),
   '/CarPage': (context) => const CarPage(),
-  '/StayList': (context) => const StayList(),
+  '/StayList': (context) => StayList(),
   '/PricePage': (context) => const PricePage(),
 };
