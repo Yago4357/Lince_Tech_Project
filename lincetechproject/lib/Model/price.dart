@@ -1,6 +1,9 @@
 ///Price model
 class Price {
 
+
+
+
   ///The sector of the price
   String parkingLane;
 

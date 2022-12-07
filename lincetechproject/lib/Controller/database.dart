@@ -3,49 +3,42 @@ import 'package:sqflite/sqflite.dart';
 import '../Model/price.dart';
 import '../Model/stay.dart';
 
-const _dbVersion = 40;
+const _dbVersion = 1;
 
 ///Class for Database
 class DatabaseStay {
   ///Database init
-  DatabaseStay() {
-    unawaited(init());
-  }
+  DatabaseStay();
 
   ///Variable for database
   late Database db;
 
   ///Function that init the database
   Future<void> init() async {
-
     final databasePath = await getDatabasesPath();
     final path = '$databasePath/demo.db';
 
     db = await openDatabase(path, version: _dbVersion,
         onCreate: (database, version) async {
-          await database.execute('''CREATE TABLE Car(
+          await database.execute('''CREATE TABLE IF NOT EXISTS Car(
           ID INTEGER NOT NULL,
           ENTRY_DATE TEXT,
           EXIT_DATE	TEXT,
           LICENSE_PLATE	TEXT NOT NULL UNIQUE,
           DRIVER_NAME	TEXT NOT NULL,
-          TOTAL_PRICE	TEXT,
+          TOTAL_PRICE REAL,
           PRIMARY KEY(ID AUTOINCREMENT));''');
-      await database.execute('''CREATE TABLE price( 
-          ID INTEGER NOT NULL, 
-          PARKING_LANE TEXT, 
-          PRICE DOUBLE, 
-          INITIAL_RANGE INTEGER, 
-          END_RANGE INTEGER, 
-          PRIMARY KEY(ID AUTO INCREMENT)''');
-    });
+          await database.execute(
+              'CREATE TABLE IF NOT EXISTS Precos( PARKING_LANE TEXT,'
+                  ' PRICE DOUBLE,INITIAL_RANGE,'
+                  'INTEGER,END_RANGE INTEGER);');
+        });
   }
 
   ///Function that insert initial datas in table price
   Future<void> insertPrice(List<Price> list) async {
-
     for (final price in list) {
-      await db.insert('price', {
+      await db.insert('Precos', {
         'PARKING_LANE': price.parkingLane,
         'PRICE': price.price,
         'INITIAL_RANGE': price.initialRange,
@@ -56,7 +49,6 @@ class DatabaseStay {
 
   ///Function that insert initial datas in table car
   Future<void> insertIn(List<Stay> list) async {
-
     for (final stay in list) {
       await db.insert('Car', {
         'ENTRY_DATE': stay.entrydate.toString(),
@@ -68,20 +60,18 @@ class DatabaseStay {
 
   ///Function that insert final datas in database
   Future<void> insertOut(String exit, String plate) async {
-
-      await db.update(
-        'Car',
-        {
-          'EXIT_DATE': exit,
-        },
-        where: 'LICENSE_PLATE = ?',
-        whereArgs: [plate],
-      );
+    await db.update(
+      'Car',
+      {
+        'EXIT_DATE': exit,
+      },
+      where: 'LICENSE_PLATE = ?',
+      whereArgs: [plate],
+    );
   }
 
   ///Function that insert final total price in database
-  Future<void> insertTotalPrice(double price, String plate) async {
-
+  Future<void> insertTotalPrice(String price, String plate) async {
     await db.update(
       'Car',
       {
@@ -94,7 +84,6 @@ class DatabaseStay {
 
   ///Function that get all finished row in database
   Future<List<Stay>> getAllFinished() async {
-
     final rows = await db.query(
       'Car',
       columns: [
@@ -117,15 +106,9 @@ class DatabaseStay {
 
   ///Function that get all not finished rows in database
   Future<List<Stay>> getAllNotFinished() async {
-
     final rows = await db.query(
       'Car',
-      columns: [
-        'ID',
-        'ENTRY_DATE',
-        'LICENSE_PLATE',
-        'DRIVER_NAME'
-      ],
+      columns: ['ID', 'ENTRY_DATE', 'LICENSE_PLATE', 'DRIVER_NAME'],
     );
 
     final list = <Stay>[];
@@ -138,8 +121,6 @@ class DatabaseStay {
 
   ///Function that delete a row in database
   Future<void> delete(List<Stay> list) async {
-
-
     for (final stay in list) {
       await db.delete(
         'Car',
@@ -151,20 +132,18 @@ class DatabaseStay {
 
   ///Function to get the prices of database
   Future<List<Price>> getPrices() async {
-
-    final rows = await db.query('price', columns: [
+    final rows = await db.query('Precos', columns: [
       'PARKING_LANE',
       'PRICE',
       'INITIAL_RANGE',
       'END_RANGE',
     ]);
 
-    final list = <Price> [];
+    final list = <Price>[];
     for (final row in rows) {
       list.add(Price.fromDatabaseRowOut(row));
     }
 
     return list;
-
   }
 }

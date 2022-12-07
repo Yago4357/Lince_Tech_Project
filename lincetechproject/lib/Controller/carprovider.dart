@@ -10,16 +10,13 @@ import 'priceprovider.dart';
 
 ///Price provider
 class CarProvider extends ChangeNotifier {
-  ///Constructor of CarProvider
-  CarProvider() {
-    helper;
-    unawaited(init());
+
+  CarProvider(){
+    init;
   }
 
   ///Helper of Database
   final helper = DatabaseStay();
-
-  PriceProvider price = PriceProvider();
 
   final _controllerPlate = TextEditingController();
   final _controllerDriver = TextEditingController();
@@ -40,15 +37,9 @@ class CarProvider extends ChangeNotifier {
   ///Init of CarProvider
   Future<void> init() async {
 
+    await helper.init();
+
     _stayList.clear();
-
-    _stayList = await helper.getAllNotFinished();
-
-    final list = await helper.getAllFinished();
-
-    for (final lis in list) {
-      _stayList.add(lis);
-    }
 
     notifyListeners();
   }
@@ -79,10 +70,18 @@ class CarProvider extends ChangeNotifier {
 
   ///Function that get all from Database
   void getAll() async {
+
+    await helper.init();
+
     _stayList.clear();
 
-    final stayListBd = await helper.getAllFinished();
+    var stayListBd = await helper.getAllFinished();
     for (final stay in stayListBd) {
+      _stayList.add(stay);
+    }
+
+    var stayListBd2 = await helper.getAllNotFinished();
+    for (final stay in stayListBd2) {
       _stayList.add(stay);
     }
 
@@ -119,7 +118,6 @@ class CarProvider extends ChangeNotifier {
   }
 
   Future<void> setPrice(String plate) async {
-    await helper.init();
 
     final list =
         _stayList.firstWhere((element) => element.licenseplate == plate);
@@ -140,7 +138,7 @@ class CarProvider extends ChangeNotifier {
 
     if (permanencia != null) {
       print('foi');
-      for (final preco in price.prices) {
+      for (final preco in PriceProvider().prices) {
         if (preco.initialRange <= permanencia &&
             preco.endRange >= permanencia) {
           precototal = preco.price;
@@ -152,11 +150,7 @@ class CarProvider extends ChangeNotifier {
         }
       }
 
-      await finishPrice(precototal, plate);
+      await helper.insertTotalPrice('$precototal', plate);
     }
-  }
-
-  Future<void> finishPrice(double price, String plate) async {
-    await helper.insertTotalPrice(price, plate);
   }
 }

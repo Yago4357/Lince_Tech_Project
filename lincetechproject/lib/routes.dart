@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'View/carpage.dart';
 import 'View/homepage.dart';
 import 'View/pricepage.dart';
+import 'View/statspage.dart';
 import 'View/staylist.dart';
 import 'View/vacanciespage.dart';
 
@@ -12,4 +13,5 @@ Map<String, Widget Function(BuildContext)> namedRoutes = {
   '/CarPage': (context) => const CarPage(),
   '/StayList': (context) => StayList(),
   '/PricePage': (context) => const PricePage(),
+  '/StatsPage': (context) => StatsPage(),
 };

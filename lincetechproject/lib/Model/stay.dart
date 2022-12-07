@@ -1,7 +1,7 @@
 ///Model for stay
 class Stay {
   ///Total price for model Stay
-  String? totalprice;
+  num? totalprice;
 
   ///Id for model Stay
   int? id;
@@ -34,6 +34,7 @@ class Stay {
             : null,
         licenseplate = row['LICENSE_PLATE'] as String,
         drivername = row['DRIVER_NAME'] as String,
-        totalprice =
-            row['TOTAL_PRICE'] != null ? row['TOTAL_PRICE'] as String : null;
+        totalprice = row['TOTAL_PRICE'] != null
+            ? row['TOTAL_PRICE'] as num
+            : null;
 }

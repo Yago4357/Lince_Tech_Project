@@ -24,7 +24,11 @@ class PriceProvider extends ChangeNotifier {
   ///Initial function of the provider
   void init() async {
 
+    await helper.init();
+
     await helper.insertPrice(prices);
+
+    getPrice();
 
     notifyListeners();
   }

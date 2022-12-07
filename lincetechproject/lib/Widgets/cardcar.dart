@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import '../Controller/carprovider.dart';
 import '../Model/stay.dart';
 
 ///Card for the ListView builder
-Widget cardCar(
-    BuildContext context, int index, List<Stay> list, CarProvider car) {
-
+Widget cardCar(BuildContext context, int index, List<Stay> list) {
   final stay = list[index];
 
   return Card(
@@ -17,40 +14,46 @@ Widget cardCar(
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 8.0, top: 4.0),
+              padding: const EdgeInsets.only(bottom: 8.0, top: 4.0,),
               child: Row(children: [
                 Text(
                   stay.licenseplate,
-                  style: const TextStyle(fontSize: 20),
+                  style: GoogleFonts.poppins(color: Colors.black, fontSize: 30),
                 ),
                 const Spacer(),
-                Text(stay.drivername),
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: Text(stay.drivername,
+                      style: GoogleFonts.poppins(color: Colors.black,),
+                      textAlign: TextAlign.justify),
+                ),
               ]),
             ),
             Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8.0, top: 4.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(children: [
-                        Text(DateFormat('dd/MM/yyyy').format(stay.entrydate)),
-                        Text(
-                          stay.exitdate != null
-                              ? DateFormat('dd/MM/yyyy').format(stay.exitdate!)
-                              : 'Ainda estacionado',
-                        ),
-                      ]),
-                      Text(
-                        stay.totalprice != null
-                            ? stay.totalprice!.toString()
-                            : 'Ainda n foi',
-                        style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                      ),
+                      Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(DateFormat('dd/MM/yyyy').format(stay
+                                .entrydate),
+                                style: GoogleFonts.poppins(
+                                    color: Colors.black)),
+                            Text(
+                                stay.exitdate != null
+                                    ? DateFormat('dd/MM/yyyy')
+                                    .format(stay.exitdate!)
+                                    : 'Ainda estacionado',
+                                style: GoogleFonts.poppins(
+                                  color: Colors.black,
+                                )),
+                          ]),
                     ],
                   ),
                 ),
@@ -61,8 +64,8 @@ Widget cardCar(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     backgroundColor: const Color.fromARGB(255, 212, 132, 60),
                   ),
-                  onPressed: () {
-                    car.finisih(stay.licenseplate);
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, '/StatsPage');
                   },
                   child: const Icon(Icons.car_crash),
                 ),

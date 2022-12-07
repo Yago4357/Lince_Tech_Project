@@ -37,7 +37,9 @@ class DrawerButton extends StatelessWidget {
               Expanded(child: Icon(icon,color: Colors.white,)),
               Expanded(child: Text(text, style: GoogleFonts.poppins(
                 color: Colors.white,
-              ),)),
+              ),
+                textAlign: TextAlign.center,
+              )),
             ],
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../Controller/carprovider.dart';
 import '../Widgets/cardcar.dart';
@@ -16,7 +17,7 @@ class StayList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => CarProvider(),
-      child: Consumer<CarProvider>(builder: (_, car, __) {
+      child: Consumer<CarProvider>(builder: (_, carro, __) {
         return Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
@@ -30,19 +31,13 @@ class StayList extends StatelessWidget {
               ClipPath(
                 clipper: BackgroundWaveClipper(),
                 child: Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
+                  width: MediaQuery.of(context).size.width,
                   height: 200,
                   decoration: const BoxDecoration(
                     color: Color.fromARGB(255, 212, 132, 60),
                   ),
                 ),
               ),
-              ElevatedButton(onPressed: (){
-                car.getAll();
-              }, child: Icon(Icons.scatter_plot_rounded)),
               Expanded(
                 child: RawScrollbar(
                   thumbColor: const Color.fromARGB(255, 212, 132, 60),
@@ -54,9 +49,9 @@ class StayList extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     controller: _firstController,
                     scrollDirection: Axis.vertical,
-                    itemCount: car.stayList.length,
+                    itemCount: carro.stayList.length,
                     itemBuilder: (context, index) =>
-                        cardCar(context, index, car.stayList,car),
+                        cardCar(context, index, carro.stayList),
                   ),
                 ),
               ),
@@ -70,19 +65,22 @@ class StayList extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         shape: const RoundedRectangleBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(20))),
+                                BorderRadius.all(Radius.circular(20))),
                         backgroundColor:
-                        const Color.fromARGB(255, 212, 132, 60),
+                            const Color.fromARGB(255, 212, 132, 60),
                       ),
                       onPressed: () async {
-                        car.getAll();
+                        carro.getAll();
                         await Navigator.pushNamed(context, '/CarPage');
                       },
-                      child: const Text('Adicionar novo Carro'),
+                      child: Text(
+                        'Adicionar novo carro',
+                        style: GoogleFonts.poppins(
+                            color: Colors.black,fontSize: 15)),
+                      ),
                     ),
                   ),
                 ),
-              ),
             ],
           ),
         );
