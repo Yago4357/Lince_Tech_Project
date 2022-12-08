@@ -34,7 +34,7 @@ dependencies:
   provider: ^6.0.4
   shared_preferences: ^2.0.15
   line_icons: ^2.0.0
-  sqflite: ^2.2.0+3
+  sqflite: ^2.2.2
   path_provider: ^2.0.11
   image_picker: ^0.8.6
   intl: ^0.17.0
@@ -66,6 +66,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+
+assets:
+  - images/data/data/com.example.lincetechproject/app_flutter/;
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

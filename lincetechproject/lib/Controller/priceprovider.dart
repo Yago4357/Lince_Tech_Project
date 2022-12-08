@@ -4,19 +4,13 @@ import 'database.dart';
 
 ///Provider for price
 class PriceProvider extends ChangeNotifier {
-
   ///Price provider constructor
-  PriceProvider(){
+  PriceProvider() {
     init();
   }
 
   ///List of Prices
-  List<Price> prices = [
-    Price('Faixa 0', 4.00, 0, 1),
-    Price('Faixa 1', 3.75, 1, 4),
-    Price('Faixa 2', 3.50, 4, 8),
-    Price('Fauxa 3', 8.00, 8, 24)
-  ];
+  List<Price> prices = [];
 
   ///Helper of Database
   final helper = DatabaseStay();
@@ -26,19 +20,20 @@ class PriceProvider extends ChangeNotifier {
 
     await helper.init();
 
-    await helper.insertPrice(prices);
-
-    getPrice();
-
     notifyListeners();
   }
 
   ///Function to get the Prices
-  void getPrice() async {
+  Future<List<Price>> getPrice() async {
+
+    await helper.init();
+
+    prices.clear();
 
     prices = await helper.getPrices();
 
     notifyListeners();
-  }
 
+    return prices;
+  }
 }

@@ -26,6 +26,7 @@ class Vacancies extends ChangeNotifier {
 
   ///Get shared int Vacancy
   Future<void> _init() async {
+
     final prefs = await SharedPreferences.getInstance();
 
     _vacancies = prefs.getInt(key) ?? 0;

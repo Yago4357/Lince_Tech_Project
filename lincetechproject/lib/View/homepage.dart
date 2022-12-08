@@ -12,9 +12,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => Vacancies(),
-      child: Consumer<Vacancies>(builder: (_, vacancies, __) {
+    return Consumer<Vacancies>(builder: (_, vacancies, __) {
         return Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
@@ -88,6 +86,7 @@ class HomePage extends StatelessWidget {
                               child: Center(
                                 child: Text(
                                   'Preço p/ Hora',
+                                  textAlign: TextAlign.center,
                                   style: GoogleFonts.poppins(
                                     color: Colors.white,
                                     fontSize: 20,
@@ -119,6 +118,7 @@ class HomePage extends StatelessWidget {
                               child: Center(
                                 child: Text(
                                   'N de Vagas',
+                                  textAlign: TextAlign.center,
                                   style: GoogleFonts.poppins(
                                     color: Colors.white,
                                     fontSize: 20,
@@ -152,6 +152,7 @@ class HomePage extends StatelessWidget {
                         child: Center(
                           child: Text(
                             'Listagem Estadias',
+                            textAlign: TextAlign.center,
                             style: GoogleFonts.poppins(
                               color: Colors.white,
                               fontSize: 20,
@@ -183,6 +184,7 @@ class HomePage extends StatelessWidget {
                     child: Center(
                       child: Text(
                         'Rendimentos',
+                        textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
                           color: Colors.white,
                           fontSize: 20,
@@ -195,7 +197,6 @@ class HomePage extends StatelessWidget {
             ],
           ),
         );
-      }),
-    );
+      });
   }
 }

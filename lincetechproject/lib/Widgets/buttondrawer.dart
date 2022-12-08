@@ -27,7 +27,7 @@ class DrawerButton extends StatelessWidget {
       child: MaterialButton(
         height: 50,
         onPressed: () async {
-          await Navigator.popAndPushNamed(context, linkPage);
+          await Navigator.pushReplacementNamed(context, linkPage);
         },
         child: SizedBox(
           width: 200,

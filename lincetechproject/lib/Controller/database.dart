@@ -8,7 +8,9 @@ const _dbVersion = 1;
 ///Class for Database
 class DatabaseStay {
   ///Database init
-  DatabaseStay();
+  DatabaseStay() {
+    init();
+  }
 
   ///Variable for database
   late Database db;
@@ -16,11 +18,11 @@ class DatabaseStay {
   ///Function that init the database
   Future<void> init() async {
     final databasePath = await getDatabasesPath();
-    final path = '$databasePath/demo.db';
+    final path = '$databasePath/database2.db';
 
     db = await openDatabase(path, version: _dbVersion,
         onCreate: (database, version) async {
-          await database.execute('''CREATE TABLE IF NOT EXISTS Car(
+      await database.execute('''CREATE TABLE Car(
           ID INTEGER NOT NULL,
           ENTRY_DATE TEXT,
           EXIT_DATE	TEXT,
@@ -28,11 +30,12 @@ class DatabaseStay {
           DRIVER_NAME	TEXT NOT NULL,
           TOTAL_PRICE REAL,
           PRIMARY KEY(ID AUTOINCREMENT));''');
-          await database.execute(
-              'CREATE TABLE IF NOT EXISTS Precos( PARKING_LANE TEXT,'
-                  ' PRICE DOUBLE,INITIAL_RANGE,'
-                  'INTEGER,END_RANGE INTEGER);');
-        });
+      await database.execute('''CREATE TABLE Precos(
+          PARKING_LANE TEXT,
+          PRICE REAL,
+          INITIAL_RANGE INTEGER,
+          END_RANGE INTEGER);''');
+    });
   }
 
   ///Function that insert initial datas in table price
@@ -40,7 +43,7 @@ class DatabaseStay {
     for (final price in list) {
       await db.insert('Precos', {
         'PARKING_LANE': price.parkingLane,
-        'PRICE': price.price,
+        'PRICE': price.priceP,
         'INITIAL_RANGE': price.initialRange,
         'END_RANGE': price.endRange,
       });
@@ -48,18 +51,18 @@ class DatabaseStay {
   }
 
   ///Function that insert initial datas in table car
-  Future<void> insertIn(List<Stay> list) async {
-    for (final stay in list) {
-      await db.insert('Car', {
-        'ENTRY_DATE': stay.entrydate.toString(),
-        'LICENSE_PLATE': stay.licenseplate,
-        'DRIVER_NAME': stay.drivername,
-      });
-    }
+  Future<void> insertIn(Stay stay) async {
+    await db.insert('Car', {
+      'ENTRY_DATE': stay.entrydate.toString(),
+      'LICENSE_PLATE': stay.licenseplate,
+      'DRIVER_NAME': stay.drivername,
+    });
   }
 
   ///Function that insert final datas in database
   Future<void> insertOut(String exit, String plate) async {
+    print('carro');
+
     await db.update(
       'Car',
       {
@@ -71,7 +74,11 @@ class DatabaseStay {
   }
 
   ///Function that insert final total price in database
-  Future<void> insertTotalPrice(String price, String plate) async {
+  Future<void> insertTotalPrice(double price, String plate) async {
+    print('preco');
+
+    print(price);
+
     await db.update(
       'Car',
       {

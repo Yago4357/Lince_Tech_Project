@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'Controller/carprovider.dart';
+import 'Controller/priceprovider.dart';
+import 'Controller/vacancies.dart';
 import 'routes.dart';
 
 void main() {
@@ -13,13 +17,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context){
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<CarProvider>(create: (_) => CarProvider()),
+        ChangeNotifierProvider<Vacancies>(create: (_) => Vacancies()),
+        ChangeNotifierProvider<PriceProvider>(create: (_) => PriceProvider()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        routes: namedRoutes,
+        initialRoute: '/',
       ),
-      routes: namedRoutes,
-      initialRoute: '/',
     );
   }
 }

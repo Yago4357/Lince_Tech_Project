@@ -7,12 +7,13 @@ import 'package:path_provider/path_provider.dart';
 import '../Model/stay.dart';
 import 'database.dart';
 import 'priceprovider.dart';
+import 'vacancies.dart';
 
-///Price provider
+///Car provider
 class CarProvider extends ChangeNotifier {
-
-  CarProvider(){
-    init;
+  ///Car provider constructor
+  CarProvider() {
+    init();
   }
 
   ///Helper of Database
@@ -29,14 +30,16 @@ class CarProvider extends ChangeNotifier {
 
   final ImagePicker _picker = ImagePicker();
 
-  List<Stay> _stayList = [];
+  final List<Stay> _stayList = [];
+
+  ///Available parking lots
+  int available = 0;
 
   ///Getter of StayList
   List<Stay> get stayList => _stayList;
 
   ///Init of CarProvider
-  Future<void> init() async {
-
+  void init() async {
     await helper.init();
 
     _stayList.clear();
@@ -45,23 +48,26 @@ class CarProvider extends ChangeNotifier {
   }
 
   ///Function add in the Database
-  void add() async {
+  Future<void> add() async {
+    await helper.init();
+
     String? plate = controllerPlate.text;
     String? driver = controllerDriver.text;
 
-    await helper.insertIn([
-      Stay(
-        DateTime.now(),
-        plate,
-        driver,
-      )
-    ]);
+    await helper.insertIn(Stay(
+      DateTime.now(),
+      plate,
+      driver,
+    ));
 
-    notifyListeners();
+    getAll();
   }
 
+  ///Function to set the car out
   void finisih(String plate) async {
-    String exit = DateTime.now().toString();
+    await helper.init();
+
+    var exit = DateTime.now().toString();
 
     await helper.insertOut(exit, plate);
 
@@ -70,31 +76,26 @@ class CarProvider extends ChangeNotifier {
 
   ///Function that get all from Database
   void getAll() async {
+    print('foi');
 
     await helper.init();
 
     _stayList.clear();
 
-    var stayListBd = await helper.getAllFinished();
-    for (final stay in stayListBd) {
-      _stayList.add(stay);
-    }
+    var _vacancies = Vacancies().vacancies;
 
-    var stayListBd2 = await helper.getAllNotFinished();
+    available = _vacancies - _stayList.length;
+
+    var stayListBd2 = await helper.getAllFinished();
     for (final stay in stayListBd2) {
       _stayList.add(stay);
     }
-
-    notifyListeners();
-  }
-
-  ///Function that delete from Database
-  void delete() async {
-    await helper.delete(_stayList);
   }
 
   ///Function to take a picture with cellphone
-  void takePicture() async {
+  Future<File> takePicture() async {
+    await helper.init();
+
     ///Variable for take License Plate name
     final plateName = controllerPlate.text;
 
@@ -106,19 +107,23 @@ class CarProvider extends ChangeNotifier {
 
     final path = await getApplicationDocumentsDirectory();
 
-    if (kDebugMode) {
-      print('PATH >> ${path.path}');
-    }
-
     final newImage = await photoPath.copy('${path.path}/$plateName.png');
 
-    if (kDebugMode) {
-      print('OLHA AQUI ${newImage.path}');
-    }
+    return newImage;
   }
 
-  Future<void> setPrice(String plate) async {
+  Future<Image> getPicture(String plateName) async {
+    final path = await getApplicationDocumentsDirectory();
 
+    final image = await Image(
+      image: AssetImage('$path/$plateName'),
+    );
+
+    return image;
+  }
+
+  ///Function to set Price
+  Future<void> setPrice(String plate) async {
     final list =
         _stayList.firstWhere((element) => element.licenseplate == plate);
 
@@ -131,26 +136,27 @@ class CarProvider extends ChangeNotifier {
     int? permanencia;
 
     list.exitdate != null
-        ? permanencia = list.exitdate!.difference(list.entrydate).inHours
+        ? permanencia = list.exitdate!.difference(list.entrydate).inHours !=
+                null
+            ? list.exitdate!.difference(list.entrydate).inHours
+            : 0
         : null;
 
     var precototal = 0.0;
 
+    var a = await PriceProvider().getPrice();
+
     if (permanencia != null) {
-      print('foi');
-      for (final preco in PriceProvider().prices) {
+      for (final preco in a) {
         if (preco.initialRange <= permanencia &&
             preco.endRange >= permanencia) {
-          precototal = preco.price;
-
-          if (kDebugMode) {
-            print(permanencia);
-            print(precototal);
-          }
+          precototal = double.parse(preco.priceP.toString());
         }
       }
 
-      await helper.insertTotalPrice('$precototal', plate);
+      await helper.insertTotalPrice(precototal, plate);
+
+      notifyListeners();
     }
   }
 }
