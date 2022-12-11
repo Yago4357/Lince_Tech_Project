@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import '../Model/price.dart';
 import 'database.dart';
@@ -7,6 +9,7 @@ class PriceProvider extends ChangeNotifier {
   ///Price provider constructor
   PriceProvider() {
     init();
+    unawaited(getPrice());
   }
 
   ///List of Prices

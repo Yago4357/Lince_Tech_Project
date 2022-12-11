@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
+import '../Model/income.dart';
 import '../Model/price.dart';
 import '../Model/stay.dart';
 
@@ -8,9 +9,7 @@ const _dbVersion = 1;
 ///Class for Database
 class DatabaseStay {
   ///Database init
-  DatabaseStay() {
-    init();
-  }
+  DatabaseStay();
 
   ///Variable for database
   late Database db;
@@ -22,7 +21,7 @@ class DatabaseStay {
 
     db = await openDatabase(path, version: _dbVersion,
         onCreate: (database, version) async {
-      await database.execute('''CREATE TABLE Car(
+          await database.execute('''CREATE TABLE Car(
           ID INTEGER NOT NULL,
           ENTRY_DATE TEXT,
           EXIT_DATE	TEXT,
@@ -30,12 +29,12 @@ class DatabaseStay {
           DRIVER_NAME	TEXT NOT NULL,
           TOTAL_PRICE REAL,
           PRIMARY KEY(ID AUTOINCREMENT));''');
-      await database.execute('''CREATE TABLE Precos(
+          await database.execute('''CREATE TABLE Precos(
           PARKING_LANE TEXT,
           PRICE REAL,
           INITIAL_RANGE INTEGER,
           END_RANGE INTEGER);''');
-    });
+        });
   }
 
   ///Function that insert initial datas in table price
@@ -60,13 +59,12 @@ class DatabaseStay {
   }
 
   ///Function that insert final datas in database
-  Future<void> insertOut(String exit, String plate) async {
-    print('carro');
+  Future<void> insertOut(DateTime exit, String plate) async {
 
     await db.update(
       'Car',
       {
-        'EXIT_DATE': exit,
+        'EXIT_DATE': exit.toString(),
       },
       where: 'LICENSE_PLATE = ?',
       whereArgs: [plate],
@@ -75,9 +73,6 @@ class DatabaseStay {
 
   ///Function that insert final total price in database
   Future<void> insertTotalPrice(double price, String plate) async {
-    print('preco');
-
-    print(price);
 
     await db.update(
       'Car',
@@ -87,6 +82,25 @@ class DatabaseStay {
       where: 'LICENSE_PLATE = ?',
       whereArgs: [plate],
     );
+  }
+
+  ///Function to get the Income per day
+  Future<List<Income>> getIncomeBd() async {
+
+    final rows = await db.query('Car',
+        columns: [
+          'EXIT_DATE',
+          'sum(TOTAL_PRICE)',
+        ],
+        groupBy: "strftime('%d-%m-%Y',EXIT_DATE)");
+
+    final list = <Income>[];
+
+    for (final row in rows) {
+      list.add(Income.fromDatabaseRowOut(row));
+    }
+
+    return list;
   }
 
   ///Function that get all finished row in database
@@ -101,26 +115,12 @@ class DatabaseStay {
         'DRIVER_NAME',
         'TOTAL_PRICE'
       ],
+      orderBy: 'EXIT_DATE ASC',
     );
 
     final list = <Stay>[];
     for (final row in rows) {
       list.add(Stay.fromDatabaseRowOut(row));
-    }
-
-    return list;
-  }
-
-  ///Function that get all not finished rows in database
-  Future<List<Stay>> getAllNotFinished() async {
-    final rows = await db.query(
-      'Car',
-      columns: ['ID', 'ENTRY_DATE', 'LICENSE_PLATE', 'DRIVER_NAME'],
-    );
-
-    final list = <Stay>[];
-    for (final row in rows) {
-      list.add(Stay.fromDatabaseRowIn(row));
     }
 
     return list;
@@ -136,6 +136,7 @@ class DatabaseStay {
       );
     }
   }
+
 
   ///Function to get the prices of database
   Future<List<Price>> getPrices() async {

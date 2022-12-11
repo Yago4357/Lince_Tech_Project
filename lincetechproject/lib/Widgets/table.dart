@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import '../Model/income.dart';
 import '../Model/price.dart';
 
 ///Widget to set the table in Price page
-Widget tableWidget(BuildContext context, int index, List<Price> list) {
-
+Widget tablePriceWidget(BuildContext context, int index, List<Price> list) {
   final stay = list[index];
 
   return Table(
@@ -12,9 +13,8 @@ Widget tableWidget(BuildContext context, int index, List<Price> list) {
       TableRow(
         decoration: BoxDecoration(
             border: Border.all(
-          color: const Color.fromARGB(255, 212, 132, 60),
-              style: BorderStyle.solid
-        )),
+                color: const Color.fromARGB(255, 212, 132, 60),
+                style: BorderStyle.solid)),
         children: [
           TableCell(
             child: SizedBox(
@@ -73,6 +73,57 @@ Widget tableWidget(BuildContext context, int index, List<Price> list) {
                     fontSize: 15,
                   ),
                   textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+
+///Widget to set the table in Income page
+Widget tableIncomeWidget(BuildContext context, int index, List<Income> list) {
+  final income = list[index];
+
+  return Table(
+    children: [
+      TableRow(
+        decoration: BoxDecoration(
+            border: Border.all(
+                color: const Color.fromARGB(255, 212, 132, 60),
+                style: BorderStyle.solid)),
+        children: [
+          TableCell(
+            child: SizedBox(
+              height: 40,
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  textAlign: TextAlign.justify,
+                  DateFormat('dd/MM/'
+                      'yyyy').format(DateTime.parse(income.data)),
+                  style: GoogleFonts.poppins(
+                    color: Colors.black,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          TableCell(
+            child: SizedBox(
+              height: 40,
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  textAlign: TextAlign.justify,
+                  'R\$ ${income.incomeDay}',
+                  style: GoogleFonts.poppins(
+                    color: Colors.black,
+                    fontSize: 15,
+                  ),
                 ),
               ),
             ),

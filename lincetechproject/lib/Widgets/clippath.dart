@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'waveclipper.dart';
+import 'package:provider/provider.dart';
+
 import '../Controller/carprovider.dart';
-import '../Controller/vacancies.dart';
+import '../Controller/priceprovider.dart';
+import 'waveclipper.dart';
 
 ///Widget to set Clip Path appbar
-Widget ClipPathWidget(BuildContext context, CarProvider carro, Vacancies vacancies) {
-  
-      return ClipPath(
+Widget clipPathWidget(BuildContext context) {
+
+  var car = Provider.of<CarProvider>(context);
+
+  return Consumer<PriceProvider>(
+      builder: (_, vacancies, __) {
+    return ClipPath(
         clipper: BackgroundWaveClipper(),
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -27,7 +33,7 @@ Widget ClipPathWidget(BuildContext context, CarProvider carro, Vacancies vacanci
                   ),
                 ),
                 Text(
-                  '${carro.available}',
+                  '${car.available}',
                   style: GoogleFonts.poppins(
                     color: Colors.white,
                     fontSize: 40,
@@ -36,6 +42,6 @@ Widget ClipPathWidget(BuildContext context, CarProvider carro, Vacancies vacanci
               ],
             ),
           ),
-        ),
-      );
+        ));
+  });
 }

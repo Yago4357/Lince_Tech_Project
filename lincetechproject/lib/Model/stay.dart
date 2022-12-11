@@ -34,7 +34,7 @@ class Stay {
             : null,
         licenseplate = row['LICENSE_PLATE'] as String,
         drivername = row['DRIVER_NAME'] as String,
-        totalprice = row['TOTAL_PRICE'] != null
-            ? row['TOTAL_PRICE'] as num
-            : null;
+        totalprice =
+            row['TOTAL_PRICE'] != null ? row['TOTAL_PRICE'] as num : null;
+
 }

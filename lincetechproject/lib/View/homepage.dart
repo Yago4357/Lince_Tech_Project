@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../Controller/vacancies.dart';
+import '../Widgets/clippath.dart';
 import '../Widgets/drawer.dart';
-import '../Widgets/waveclipper.dart';
 
 ///Initial Screen Class
 class HomePage extends StatelessWidget {
@@ -12,7 +12,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<Vacancies>(builder: (_, vacancies, __) {
+    return Consumer<Vacancies>(
+        builder: (_, vacancies, __) {
         return Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
@@ -24,37 +25,7 @@ class HomePage extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ClipPath(
-                clipper: BackgroundWaveClipper(),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 240,
-                  decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 212, 132, 60),
-                  ),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Vagas Disponiveis: ',
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
-                        ),
-                        Text(
-                          vacancies.vacancies.toString(),
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 40,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              clipPathWidget(context),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -81,7 +52,7 @@ class HomePage extends StatelessWidget {
                                     const Color.fromARGB(255, 212, 132, 60),
                               ),
                               onPressed: () async {
-                                await Navigator.pushNamed(context, '/StayList');
+                                await Navigator.pushNamed(context, '/PricePage');
                               },
                               child: Center(
                                 child: Text(
@@ -113,7 +84,7 @@ class HomePage extends StatelessWidget {
                                     const Color.fromARGB(255, 212, 132, 60),
                               ),
                               onPressed: () async {
-                                await Navigator.pushNamed(context, '/StayList');
+                                await Navigator.pushNamed(context, '/VacanciesPage');
                               },
                               child: Center(
                                 child: Text(

@@ -39,6 +39,9 @@ dependencies:
   image_picker: ^0.8.6
   intl: ^0.17.0
   google_fonts: ^3.0.1
+  collection:
+  pdf: ^3.8.4
+  pdfx: ^2.3.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -66,9 +69,6 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-
-assets:
-  - images/data/data/com.example.lincetechproject/app_flutter/;
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

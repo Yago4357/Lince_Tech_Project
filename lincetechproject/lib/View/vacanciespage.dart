@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../Widgets/textvacancies.dart';
+
 import '/Controller/vacancies.dart';
+import '../Controller/carprovider.dart';
+import '../Widgets/clippath.dart';
 import '../Widgets/drawer.dart';
-import '../Widgets/waveclipper.dart';
+import '../Widgets/textvacancies.dart';
 
 ///Initial Page of myApp
 class VacanciesPage extends StatelessWidget {
@@ -16,6 +17,7 @@ class VacanciesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var car = Provider.of<CarProvider>(context);
     return  Consumer<Vacancies>(
         builder: (_, vacancies, __) {
           return Scaffold(
@@ -27,45 +29,15 @@ class VacanciesPage extends StatelessWidget {
             drawer: const DrawerWidget(),
             body: Column(
               children: [
-                ClipPath(
-                  clipper: BackgroundWaveClipper(),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 240,
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 212, 132, 60),
-                    ),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Vagas Disponiveis: ',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),
-                          ),
-                          Text(
-                            vacancies.vacancies.toString(),
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: 40,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                clipPathWidget(context),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
                     child: Column(
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(32.0),
-                          child: TextVacancies(context),
+                          padding: const EdgeInsets.all(32.0),
+                          child: textVacancies(context),
                         ),
                       ],
                     ),
@@ -75,7 +47,10 @@ class VacanciesPage extends StatelessWidget {
             ),
             floatingActionButton: FloatingActionButton(
               backgroundColor: const Color.fromARGB(255, 212, 132, 60),
-              onPressed: vacancies.saveShared,
+              onPressed: () async => {
+                await vacancies.saveShared(),
+                await car.getAll(),
+              },
               child: const Icon(
                 Icons.save,
               ),

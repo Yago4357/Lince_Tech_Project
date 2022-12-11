@@ -22,13 +22,13 @@ class DrawerWidget extends StatelessWidget {
             DrawerButton(
                 text: 'Vacanceis Number',
                 icon: Icons.directions_car_filled,
-                linkPage: '/InitialPage'),
+                linkPage: '/VacanciesPage'),
             DrawerButton(
                 text: 'Stays List', icon: Icons.list, linkPage: '/StayList'),
             DrawerButton(
                 text: 'Income',
                 icon: Icons.incomplete_circle_outlined,
-                linkPage: '/InitialPage'),
+                linkPage: '/IncomePage'),
           ],
         ),
       ),

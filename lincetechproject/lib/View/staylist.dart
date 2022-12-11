@@ -11,7 +11,7 @@ import 'carpage.dart';
 ///Page for the Stay list
 class StayList extends StatelessWidget {
   ///Stay List constructor
-  StayList({Key? key}) : super(key: key);
+   StayList({Key? key}) : super(key: key);
 
   final ScrollController _firstController = ScrollController();
 
@@ -19,7 +19,6 @@ class StayList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer2<CarProvider, Vacancies>(
         builder: (_, carro, vacancies, __) {
-          carro.getAll();
       return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -30,14 +29,13 @@ class StayList extends StatelessWidget {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ClipPathWidget(context, carro, vacancies),
+            clipPathWidget(context),
             Expanded(
               child: ListView.builder(
                 controller: _firstController,
                 scrollDirection: Axis.vertical,
                 itemCount: carro.stayList.length,
-                itemBuilder: (context, index) =>
-                    cardCar(context, index, carro),
+                itemBuilder: (context, index) => cardCar(context, index, carro),
               ),
             ),
             Center(
@@ -53,12 +51,23 @@ class StayList extends StatelessWidget {
                       backgroundColor: const Color.fromARGB(255, 212, 132, 60),
                     ),
                     onPressed: () async {
-                      carro.getAll();
-                      await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => carPage(context, car: carro),
-                          ));
+                      if (carro.available > 0) {
+                        await carro.getAll();
+                        await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  CarPage(car: carro),
+                            ));
+                      } else {
+                        return showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const AlertDialog(
+                                title: Text('Não há vagas disponiveis'),
+                              );
+                            });
+                      }
                     },
                     child: Text('Adicionar novo carro',
                         style: GoogleFonts.poppins(

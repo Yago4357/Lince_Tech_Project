@@ -24,13 +24,6 @@ Widget cardCar(BuildContext context, int index, CarProvider carro) {
                 stay.licenseplate,
                 style: GoogleFonts.poppins(color: Colors.black, fontSize: 30),
               ),
-              SizedBox(
-                height: 50,
-                width: 50,
-                child: ClipRRect(child: Image.asset(
-                    '/data/data/com.example.lincetechproject/app_flutter/${stay
-                        .licenseplate}.png')),
-              ),
               const Spacer(),
               Padding(
                 padding: const EdgeInsets.only(right: 10.0),
@@ -59,7 +52,7 @@ Widget cardCar(BuildContext context, int index, CarProvider carro) {
                           Text(
                               stay.exitdate != null
                                   ? DateFormat('dd/MM/yyyy')
-                                      .format(stay.exitdate!)
+                                  .format(stay.exitdate!)
                                   : 'Ainda estacionado',
                               style: GoogleFonts.poppins(
                                 color: Colors.black,
@@ -75,11 +68,12 @@ Widget cardCar(BuildContext context, int index, CarProvider carro) {
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                   backgroundColor: const Color.fromARGB(255, 212, 132, 60),
                 ),
-                onPressed: () async => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            StatsPage(stay: stay, carro: carro))),
+                onPressed: () async =>
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                StatsPage(stay: stay))),
                 child: const Icon(Icons.car_crash),
               ),
             ],

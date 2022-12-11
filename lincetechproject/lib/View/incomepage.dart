@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../Controller/priceprovider.dart';
+
+import '../Controller/incomeprovider.dart';
 import '../Widgets/clippath.dart';
 import '../Widgets/drawer.dart';
 import '../Widgets/table.dart';
 
-///Page for prices
-class PricePage extends StatelessWidget {
-  ///Price constructor
-  const PricePage({Key? key}) : super(key: key);
+///Page to show the income per day
+class IncomePage extends StatelessWidget {
+
+  ///Income page constructor
+  const IncomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final firstController = ScrollController();
 
-    return Consumer<PriceProvider>(builder: (_, price, __) {
+    return Consumer<IncomeProvider>(builder: (_, income, __) {
       return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -46,7 +48,7 @@ class PricePage extends StatelessWidget {
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                'Faixa',
+                                'Dia',
                                 style: GoogleFonts.poppins(
                                   color: Colors.black,
                                   fontSize: 15,
@@ -62,39 +64,7 @@ class PricePage extends StatelessWidget {
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                'Intervalo\n inicial',
-                                style: GoogleFonts.poppins(
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                        ),
-                        TableCell(
-                          child: SizedBox(
-                            height: 60,
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Intervalo\n final',
-                                style: GoogleFonts.poppins(
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                        ),
-                        TableCell(
-                          child: SizedBox(
-                            height: 60,
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Preço',
+                                'Ganho do dia',
                                 style: GoogleFonts.poppins(
                                   color: Colors.black,
                                   fontSize: 15,
@@ -119,9 +89,9 @@ class PricePage extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 26.0, left: 26.0),
                   controller: firstController,
                   scrollDirection: Axis.vertical,
-                  itemCount: price.prices.length,
+                  itemCount: income.incomeList.length,
                   itemBuilder: (context, index) =>
-                      tablePriceWidget(context, index, price.prices),
+                      tableIncomeWidget(context, index, income.incomeList),
                 ),
               ),
             ),

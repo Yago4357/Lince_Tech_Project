@@ -43,9 +43,12 @@ class Vacancies extends ChangeNotifier {
     final vacancies = int.tryParse(text) ?? 0;
 
     final prefs = await SharedPreferences.getInstance();
+
     await prefs.setInt(key, vacancies);
 
     _vacancies = vacancies;
+
+
 
     notifyListeners();
   }

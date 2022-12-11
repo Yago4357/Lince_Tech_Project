@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Controller/carprovider.dart';
+import 'Controller/incomeprovider.dart';
 import 'Controller/priceprovider.dart';
 import 'Controller/vacancies.dart';
 import 'routes.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<CarProvider>(create: (_) => CarProvider()),
         ChangeNotifierProvider<Vacancies>(create: (_) => Vacancies()),
         ChangeNotifierProvider<PriceProvider>(create: (_) => PriceProvider()),
+        ChangeNotifierProvider<IncomeProvider>(create: (_) => IncomeProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
