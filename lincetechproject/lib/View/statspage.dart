@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -84,7 +85,7 @@ class StatsPage extends StatelessWidget {
                           child: Column(
                             children: [
                               Text(
-                                'Brazil',
+                                AppLocalizations.of(context)!.country,
                                 style: GoogleFonts.poppins(
                                   color: Colors.black,
                                   fontSize: 20,
@@ -110,7 +111,8 @@ class StatsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      'Motorista:\n${stayCar.drivername}',
+                      '${AppLocalizations.of(context)!.driver}\n'
+                          '${stayCar.drivername}',
                       style: GoogleFonts.poppins(
                         color: Colors.black,
                         fontSize: 20,
@@ -121,7 +123,8 @@ class StatsPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          ('Hora de Entrada:\n${DateFormat('HH:mm:'
+                          ('${AppLocalizations.of(context)!.entryTime}\n'
+                              '${DateFormat('HH:mm:'
                               'ss').format(stayCar.entrydate)}'),
                           style: GoogleFonts.poppins(
                             color: Colors.black,
@@ -131,9 +134,10 @@ class StatsPage extends StatelessWidget {
                         ),
                         Text(
                           stayCar.exitdate != null
-                              ? ('Hora de saída:\n ${DateFormat('HH:mm:'
+                              ? ('${AppLocalizations.of(context)!.exitTime}\n '
+                              '${DateFormat('HH:mm:'
                                   'ss').format(stayCar.exitdate!)}')
-                              : 'Ainda\n Estacionado',
+                              : AppLocalizations.of(context)!.parked,
                           style: GoogleFonts.poppins(
                             color: Colors.black,
                             fontSize: 20,
@@ -144,7 +148,8 @@ class StatsPage extends StatelessWidget {
                     ),
                     Text(
                       stayCar.totalprice != null
-                          ? 'Preço total: \n R\$ ${stayCar.totalprice}'
+                          ? '${AppLocalizations.of(context)!.totalPrice}\n '
+                          'R\$ ${stayCar.totalprice}'
                           : '',
                       style: GoogleFonts.poppins(
                         color: Colors.black,
@@ -165,7 +170,7 @@ class StatsPage extends StatelessWidget {
                               ),
                             ))
                         : Text(
-                            'Imagem não encontrada',
+                            AppLocalizations.of(context)!.imageNotFound,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.poppins(
                                 color: Colors.black, fontSize: 20),
@@ -188,7 +193,7 @@ class StatsPage extends StatelessWidget {
                         onPressed: () async {
                           await car.finish(stayCar.licenseplate);
                         },
-                        child: const Text('Finalizar Estadia'))
+                        child: Text(AppLocalizations.of(context)!.finalizeStay))
                     : ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(220, 60),
@@ -211,7 +216,7 @@ class StatsPage extends StatelessWidget {
                           '/data/data/com.example.lincetechproject/'
                               'app_flutter/${stayCar.licenseplate}.png');
                         },
-                        child: const Text('Gerar Relatório')),
+                        child: Text(AppLocalizations.of(context)!.generatePdf)),
               ),
             ]),
           ),

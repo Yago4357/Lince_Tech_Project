@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -48,7 +49,7 @@ class IncomePage extends StatelessWidget {
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                'Dia',
+                                AppLocalizations.of(context)!.day,
                                 style: GoogleFonts.poppins(
                                   color: Colors.black,
                                   fontSize: 15,
@@ -64,7 +65,7 @@ class IncomePage extends StatelessWidget {
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                'Ganho do dia',
+                                AppLocalizations.of(context)!.incomePerDay,
                                 style: GoogleFonts.poppins(
                                   color: Colors.black,
                                   fontSize: 15,

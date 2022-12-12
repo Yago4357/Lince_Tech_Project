@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../Model/income.dart';
@@ -102,8 +103,8 @@ Widget tableIncomeWidget(BuildContext context, int index, List<Income> list) {
                 alignment: Alignment.center,
                 child: Text(
                   textAlign: TextAlign.justify,
-                  DateFormat('dd/MM/'
-                      'yyyy').format(DateTime.parse(income.data)),
+                  DateFormat(AppLocalizations.of(context)!.dateFormat)
+                      .format(DateTime.parse(income.data)),
                   style: GoogleFonts.poppins(
                     color: Colors.black,
                     fontSize: 15,
@@ -119,7 +120,7 @@ Widget tableIncomeWidget(BuildContext context, int index, List<Income> list) {
                 alignment: Alignment.center,
                 child: Text(
                   textAlign: TextAlign.justify,
-                  'R\$ ${income.incomeDay}',
+                  '${AppLocalizations.of(context)!.coin} ${income.incomeDay}',
                   style: GoogleFonts.poppins(
                     color: Colors.black,
                     fontSize: 15,

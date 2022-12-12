@@ -163,6 +163,13 @@
             </list>
           </value>
         </entry>
+        <entry key="flutter_localizations">
+          <value>
+            <list>
+              <option value="$USER_HOME$/OneDrive/Documents/flutter_windows_3.3.9-stable/flutter/packages/flutter_localizations/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="flutter_plugin_android_lifecycle">
           <value>
             <list>
@@ -541,20 +548,6 @@
             </list>
           </value>
         </entry>
-        <entry key="syncfusion_flutter_core">
-          <value>
-            <list>
-              <option value="$USER_HOME$/OneDrive/Documents/flutter_windows_3.3.9-stable/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_core-20.3.60/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="syncfusion_flutter_pdf">
-          <value>
-            <list>
-              <option value="$USER_HOME$/OneDrive/Documents/flutter_windows_3.3.9-stable/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_pdf-20.3.60/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="synchronized">
           <value>
             <list>
@@ -701,8 +694,6 @@
       <root url="file://$USER_HOME$/OneDrive/Documents/flutter_windows_3.3.9-stable/flutter/.pub-cache/hosted/pub.dartlang.org/stack_trace-1.10.0/lib" />
       <root url="file://$USER_HOME$/OneDrive/Documents/flutter_windows_3.3.9-stable/flutter/.pub-cache/hosted/pub.dartlang.org/stream_channel-2.1.0/lib" />
       <root url="file://$USER_HOME$/OneDrive/Documents/flutter_windows_3.3.9-stable/flutter/.pub-cache/hosted/pub.dartlang.org/string_scanner-1.1.1/lib" />
-      <root url="file://$USER_HOME$/OneDrive/Documents/flutter_windows_3.3.9-stable/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_core-20.3.60/lib" />
-      <root url="file://$USER_HOME$/OneDrive/Documents/flutter_windows_3.3.9-stable/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_pdf-20.3.60/lib" />
       <root url="file://$USER_HOME$/OneDrive/Documents/flutter_windows_3.3.9-stable/flutter/.pub-cache/hosted/pub.dartlang.org/synchronized-3.0.0+3/lib" />
       <root url="file://$USER_HOME$/OneDrive/Documents/flutter_windows_3.3.9-stable/flutter/.pub-cache/hosted/pub.dartlang.org/term_glyph-1.2.1/lib" />
       <root url="file://$USER_HOME$/OneDrive/Documents/flutter_windows_3.3.9-stable/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.4.12/lib" />
@@ -715,6 +706,7 @@
       <root url="file://$USER_HOME$/OneDrive/Documents/flutter_windows_3.3.9-stable/flutter/.pub-cache/hosted/pub.dartlang.org/xml-6.1.0/lib" />
       <root url="file://$USER_HOME$/OneDrive/Documents/flutter_windows_3.3.9-stable/flutter/bin/cache/pkg/sky_engine/lib" />
       <root url="file://$USER_HOME$/OneDrive/Documents/flutter_windows_3.3.9-stable/flutter/packages/flutter/lib" />
+      <root url="file://$USER_HOME$/OneDrive/Documents/flutter_windows_3.3.9-stable/flutter/packages/flutter_localizations/lib" />
       <root url="file://$USER_HOME$/OneDrive/Documents/flutter_windows_3.3.9-stable/flutter/packages/flutter_test/lib" />
       <root url="file://$USER_HOME$/OneDrive/Documents/flutter_windows_3.3.9-stable/flutter/packages/flutter_web_plugins/lib" />
     </CLASSES>

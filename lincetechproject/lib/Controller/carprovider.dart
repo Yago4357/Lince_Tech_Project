@@ -1,13 +1,17 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pd;
 import 'package:pdfx/pdfx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Model/brand.dart';
+import '../Model/carmodel.dart';
 import '../Model/stay.dart';
 import '../View/pdfreader.dart';
 import 'database.dart';
@@ -36,13 +40,25 @@ class CarProvider extends ChangeNotifier {
   final ImagePicker _picker = ImagePicker();
 
   ///Variable to wait time to reload the page
-  bool load = false;
+  late bool load;
 
   ///List of stay
   final List<Stay> _stayList = [];
 
   ///Available parking lots
   int available = 0;
+
+  ///Varaible to take the brand list
+  Future<List<Brand>>? _brandList;
+
+  ///Function to get the brand list
+  Future<List<Brand>>? get brandList => _brandList;
+
+  ///Getter of model list
+  List<CarModel>? _modelList;
+
+  ///Getter of model list
+  Future<List<CarModel>?> get modelList async => _modelList;
 
   ///Getter of StayList
   List<Stay> get stayList => _stayList;
@@ -52,6 +68,8 @@ class CarProvider extends ChangeNotifier {
     await helper.init();
 
     _stayList.clear();
+
+    _brandList = getBrand();
 
     notifyListeners();
   }
@@ -179,7 +197,8 @@ class CarProvider extends ChangeNotifier {
     String drivername,
     String entry,
     String exit,
-    String price, String imagePath,
+    String price,
+    String imagePath,
   ) async {
     var pdf = pd.Document(deflate: zlib.encode);
 
@@ -216,5 +235,48 @@ class CarProvider extends ChangeNotifier {
         MaterialPageRoute(
           builder: (context) => PdfReader(pdf: pdfController),
         ));
+  }
+
+  ///Function to get brand
+  Future<List<Brand>> getBrand() async {
+    var uri = Uri.http('parallelum.com.br', '/fipe/api/v2/cars/brands');
+
+    final future = await http.get(uri);
+
+    var list = jsonDecode(future.body);
+
+    var map = {for (var item in list) item['name']: item['code']};
+
+    var list2 = <Brand>[];
+
+    map.entries
+        .map((e) => list2.add(Brand(name: e.key, code: e.value)))
+        .toList();
+
+    return list2;
+  }
+
+  ///Function to get model
+  Future<void> getModel(String brandId) async {
+    var uri = Uri.http(
+        'parallelum.com.br', '/fipe/api/v2/cars/brands/$brandId/models');
+
+    final future = await http.get(uri);
+
+    var list = jsonDecode(future.body);
+
+    var map = {for (var item in list) item['name']: item['code']};
+
+    var list2 = <CarModel>[];
+
+    map.entries
+        .map((e) => list2.add(CarModel(name: e.key, code: e.value)))
+        .toList();
+
+    _modelList = list2;
+
+    print(12345678910);
+
+    notifyListeners();
   }
 }

@@ -10,6 +10,7 @@ Widget textVacancies(BuildContext context) {
 
   return Center(
     child: TextFormField(
+      keyboardType: TextInputType.number,
       controller: state.controller,
     ),
   );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
 import '../Controller/carprovider.dart';
 import '../Controller/vacancies.dart';
 import '../Widgets/cardcar.dart';
@@ -11,7 +13,7 @@ import 'carpage.dart';
 ///Page for the Stay list
 class StayList extends StatelessWidget {
   ///Stay List constructor
-   StayList({Key? key}) : super(key: key);
+  StayList({Key? key}) : super(key: key);
 
   final ScrollController _firstController = ScrollController();
 
@@ -56,20 +58,20 @@ class StayList extends StatelessWidget {
                         await Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  CarPage(car: carro),
+                              builder: (context) => const CarPage(),
                             ));
                       } else {
                         return showDialog(
                             context: context,
                             builder: (context) {
-                              return const AlertDialog(
-                                title: Text('Não há vagas disponiveis'),
+                              return AlertDialog(
+                                title: Text(
+                                    AppLocalizations.of(context)!.noVacancy),
                               );
                             });
                       }
                     },
-                    child: Text('Adicionar novo carro',
+                    child: Text(AppLocalizations.of(context)!.addNewCar,
                         style: GoogleFonts.poppins(
                             color: Colors.white, fontSize: 15)),
                   ),
