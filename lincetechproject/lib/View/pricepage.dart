@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import '../Controller/priceprovider.dart';
 import '../Widgets/clippath.dart';
 import '../Widgets/drawer.dart';
-import '../Widgets/table.dart';
 
 ///Page for prices
 class PricePage extends StatelessWidget {
@@ -15,8 +14,6 @@ class PricePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final firstController = ScrollController();
-
     return Consumer<PriceProvider>(builder: (_, price, __) {
       return Scaffold(
         extendBodyBehindAppBar: true,
@@ -108,23 +105,6 @@ class PricePage extends StatelessWidget {
                         ),
                       ])
                 ],
-              ),
-            ),
-            Expanded(
-              child: RawScrollbar(
-                thumbColor: const Color.fromARGB(255, 212, 132, 60),
-                radius: const Radius.circular(20),
-                thickness: 10,
-                thumbVisibility: false,
-                controller: firstController,
-                child: ListView.builder(
-                  padding: const EdgeInsets.only(right: 26.0, left: 26.0),
-                  controller: firstController,
-                  scrollDirection: Axis.vertical,
-                  itemCount: price.prices.length,
-                  itemBuilder: (context, index) =>
-                      tablePriceWidget(context, index, price.prices),
-                ),
               ),
             ),
           ],

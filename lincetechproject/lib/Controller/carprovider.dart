@@ -40,7 +40,7 @@ class CarProvider extends ChangeNotifier {
   final ImagePicker _picker = ImagePicker();
 
   ///Variable to wait time to reload the page
-  late bool load;
+  bool load = false;
 
   ///List of stay
   final List<Stay> _stayList = [];
